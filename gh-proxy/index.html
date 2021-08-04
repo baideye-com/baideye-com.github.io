@@ -118,7 +118,84 @@
     <title>GitHub 文件加速</title>
 </head>
 
+<!--javascript弹窗暗号验证开始-->
+<link href="https://cdn.bootcss.com/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<link href="https://cdn.bootcss.com/jquery-confirm/3.3.4/jquery-confirm.min.css" rel="stylesheet" />
+<script src="https://cdn.bootcss.com/jquery-confirm/3.3.4/jquery-confirm.min.js"></script>
+<script src="https://cdn.bootcss.com/blueimp-md5/2.13.0/js/md5.min.js"></script>
+<style type="text/css">
+	html, table {
+		font-size: 15px;
+	}
 
+	.content {
+		border: 1px solid #cccccc;
+		height: 200px;
+		box-shadow: 1px 1px 8px #e0e0e0;
+		margin-top: 20px;
+	}
+
+	.box-shadow {
+		box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+	}
+</style>
+<script type="text/javascript">
+	window.onload = function () { daihao(); } 
+
+	var anhao = '05a5cf06982ba7892ed2a6d38fe832d6';
+	function jiazai() {
+		var anhaoCookie = getCookie('anhao');
+		if (anhaoCookie != anhao) {
+			daihao();
+		}
+	}
+
+	function daihao() {
+		$.confirm({
+			theme: 'Modern',
+			title: '暗号验证',
+			content: '' +
+				'<form action="" class="formName">' +
+				'<div class="form-group">' +
+				'<img src="https://image.suning.cn/uimg/ZR/share_order/159357417558731655.jpg" />' +
+				'<br/>' +
+				'<h5 class="text-center">扫码关注微信公众号【马小帮】</h5>' +
+				'<h5 class="text-center">在公众号内发送 “<span style="color:red;">暗号</span>” 即可获取</h5>' +
+				'<h5 class="text-center">暗号不定期更换，请勿取关哟~</h5>' +
+				'<br/>' +
+				'<input type="text" placeholder="在这里输入你获取的暗号" class="name form-control" required />' +
+				'</div>' +
+				'</form>',
+			buttons: {
+				formSubmit: {
+					text: '提交',
+					btnClass: 'btn-blue',
+					action: function () {
+						var name = md5(this.$content.find('.name').val());
+						if (name == anhao) {
+							//setCookie('anhao', anhao);
+							return true;
+						} else {
+							$.alert('暗号错误！！<br/>请输入你在微信公众号内获取的暗号！');
+							return false;
+						}
+						return false;
+					}
+				},
+			},
+			onContentReady: function () {
+				var jc = this;
+				this.$content.find('form').on('submit', function (e) {
+					e.preventDefault();
+					jc.$$formSubmit.trigger('click');
+				});
+			}
+		});
+	}
+</script>
+<!--javascript弹窗暗号验证结束-->
 
 <body class="flex"></body>
 <h1 style="margin-bottom: 50px"><img src="https://ae01.alicdn.com/kf/H2fc84859291347418b11091fe0e508b8v.png" style="width: 1.5em;margin-right: .2em;vertical-align: bottom;">GitHub 文件加速</h1>
